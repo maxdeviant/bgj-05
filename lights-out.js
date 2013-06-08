@@ -81,22 +81,6 @@ $(document).ready(function() {
 		}
 	});
 
-	Q.Sprite.extend("Dark", {
-		init: function(p) {
-			this._super(p, {
-				color: "#000000",
-				w: Q.width,
-				h: Q.height
-			});
-		},
-		draw: function(ctx) {
-			ctx.fillStyle = this.p.color;
-			//ctx.globalAlpha = 0.5;
-			ctx.fillRect(0, 0, Q.width, Q.height);
-		}
-
-	});
-
 	Q.UI.Text.extend("Score", {
 		init: function(p) {
 			this._super({
@@ -175,10 +159,6 @@ $(document).ready(function() {
 		stage.insert(new Q.Orb({ x: player.p.x + 64, y: Q.height - 50 }))
 
 		stage.insert(new Q.Gateway({ x: Q.width - 48, y: 144 }));
-
-		var mask = new Q.Dark();
-		stage.insert(mask);
-		mask.render(Q.ctx);
 
 		stage.add("viewport").follow(player, { x: true, y: true });
 		stage.viewport.scale = 2;
