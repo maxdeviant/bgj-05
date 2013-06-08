@@ -23,6 +23,7 @@ $(document).ready(function() {
 			this.on("hit.sprite", function(collision) {
 				if (collision.obj.isA("Gateway")) {
 					Q.stageScene(levels[currLevel], 1);
+					this.destroy();
 				}
 
 			})
