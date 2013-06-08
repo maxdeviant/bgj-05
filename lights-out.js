@@ -69,13 +69,15 @@ $(document).ready(function() {
 	//var player = new Q.Player();
 
 	Q.scene("title", function(stage) {
+		stage.insert(new Q.Repeater({ asset: "background.png", speedX: 1, speedY: 1}));
+
 		var container = stage.insert(new Q.UI.Container({
-			x: Q.width / 2, y: Q.height / 2, fill: "gray"
+			x: Q.width / 2, y: Q.height / 2, fill: "#404040"
 		}));
 
-		var button = container.insert(new Q.UI.Button({ x: 0, y: 0, fill: "black", label: "Start!" }));
+		var button = container.insert(new Q.UI.Button({ x: 0, y: 0, fill: "white", label: "Start Game" }));
 
-		var label = container.insert(new Q.UI.Text({ x: 10, y: -10 - button.p.h, label: stage.options.label }));
+		var label = container.insert(new Q.UI.Text({ x: 0, y: -10 - button.p.h, label: stage.options.label }));
 
 		button.on("click", function() {
 			Q.clearStages();
@@ -159,6 +161,6 @@ $(document).ready(function() {
 
 		Q.clearStages();
 		//Q.stageScene(levels[currLevel]);
-		Q.stageScene("title", 1, { label: "Start" });
+		Q.stageScene("title", 1, { label: "In Search Of Light" });
 	});
 });
