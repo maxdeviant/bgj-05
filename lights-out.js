@@ -5,7 +5,7 @@ $(document).ready(function() {
 		.controls()
 		.touch();
 
-	var W = $('#lights-out');
+	//var W = $('#lights-out');
 
 	var currLevel = 0;
 	var levels = ["level-one", "level-two", "level-three"];
@@ -15,7 +15,7 @@ $(document).ready(function() {
 			this._super(p, {
 				sheet: "player",
 				x: 64,
-				y: W.height() - 48
+				y: Q.height - 48
 			});
 
 			this.add("2d, platformerControls");
@@ -95,7 +95,7 @@ $(document).ready(function() {
 
 		var player = stage.insert(new Q.Player());
 
-		stage.insert(new Q.Gateway({ x: W.width() - 48, y: 144 }));
+		stage.insert(new Q.Gateway({ x: Q.width - 48, y: 144 }));
 
 		stage.add("viewport").follow(player, { x: true, y: true });
 		stage.viewport.scale = 2;
@@ -113,13 +113,13 @@ $(document).ready(function() {
 
 		var player = stage.insert(new Q.Player());
 
-		stage.insert(new Q.BouncePad({ x: 128, y: W.height() - 32 }));
-		stage.insert(new Q.BouncePad({ x: 240, y: W.height() - 256 }));
-		stage.insert(new Q.BouncePad({ x: W.width() - 7 * 32 + 16, y: W.height() - 12 * 32 }));
+		stage.insert(new Q.BouncePad({ x: 128, y: Q.height - 32 }));
+		stage.insert(new Q.BouncePad({ x: 240, y: Q.height - 256 }));
+		stage.insert(new Q.BouncePad({ x: Q.width - 7 * 32 + 16, y: Q.height - 12 * 32 }));
 
 		stage.insert(new Q.Gateway({ x: 64, y: 8 * 32 - 16}));
 
-		//stage.insert(new Q.Switch({ x: 256, y: W.height() - 32 }));
+		//stage.insert(new Q.Switch({ x: 256, y: Q.height - 32 }));
 
 		stage.add("viewport").follow(player, { x: true, y: true });
 		stage.viewport.scale = 2;
@@ -137,13 +137,13 @@ $(document).ready(function() {
 
 		var player = stage.insert(new Q.Player());
 
-		// stage.insert(new Q.BouncePad({ x: 128, y: W.height() - 32 }));
-		// stage.insert(new Q.BouncePad({ x: 240, y: W.height() - 256 }));
-		// stage.insert(new Q.BouncePad({ x: W.width() - 7 * 32 + 16, y: W.height() - 12 * 32 }));
+		// stage.insert(new Q.BouncePad({ x: 128, y: Q.height - 32 }));
+		// stage.insert(new Q.BouncePad({ x: 240, y: Q.height - 256 }));
+		// stage.insert(new Q.BouncePad({ x: Q.width - 7 * 32 + 16, y: Q.height - 12 * 32 }));
 
 		// stage.insert(new Q.Gateway({ x: 64, y: 8 * 32 - 16}));
 
-		//stage.insert(new Q.Switch({ x: 256, y: W.height() - 32 }));
+		//stage.insert(new Q.Switch({ x: 256, y: Q.height - 32 }));
 
 		stage.add("viewport").follow(player, { x: true, y: true });
 		stage.viewport.scale = 2;
