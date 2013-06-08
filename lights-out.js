@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	var Q = Quintus()
 		.include("Sprites, Scenes, Input, 2D, Anim, Touch, UI")
-		.setup({ maximize: true })
+		.setup("lights-out", { maximize: false })
 		.controls()
 		.touch();
 
@@ -22,7 +22,7 @@ $(document).ready(function() {
 			this._super(p, {
 				asset: "tile.png",
 				x: 0,
-				y: 600,
+				y: 600
 			});
 		}
 	});
@@ -31,15 +31,21 @@ $(document).ready(function() {
 		stage.insert(new Q.Repeater({ asset: "background.png", speedX: 0.5, speedY: 0.5}));
 
 		var player = stage.insert(new Q.Player());
-		var tile = stage.insert(new Q.Tile());
+		var tiles = [];
+		
+		for (var i = 0; i < 30; i++) {
+			tiles[i] = stage.insert(new Q.Tile({
+				x: -1000 + 64 * i,
+				y: $('#lights-out').height() - 32
+			}));
+		}
 
-		stage.add("viewport").follow(player);
+		//var tile = stage.insert(new Q.Tile());
+
+		stage.add("viewport").follow(player, { x: true, y: false });
 	});
 
 	Q.load("player.png, tile.png, background.png", function() {
-		var player = new Q.Player();
-		var tile = new Q.Tile();
-
 		Q.stageScene("testlevel");
 	});
 });
