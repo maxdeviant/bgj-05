@@ -1,6 +1,6 @@
 {
 	"player": {
-		"sx": 0,
+		"sx": 32,
 		"sy": 0,
 		"cols": 1,
 		"tilew": 32,
@@ -9,34 +9,26 @@
 	},
 	"gateway": {
 		"sx": 0,
-		"sy": 32,
+		"sy": 0,
 		"cols": 1,
 		"tilew": 32,
 		"tileh": 32,
 		"frames": 1
 	},
 	"bounce-pad": {
-		"sx": 0,
-		"sy": 64,
+		"sx": 32,
+		"sy": 32,
 		"cols": 1,
 		"tilew": 32,
 		"tileh": 16,
 		"frames": 1
 	},
-	"switch-unactivated": {
+	"orb": {
 		"sx": 0,
-		"sy": 80,
+		"sy": 32,
 		"cols": 1,
 		"tilew": 32,
-		"tileh": 16,
-		"frames": 1
-	},
-	"switch-activated": {
-		"sx": 0,
-		"sy": 88,
-		"cols": 1,
-		"tilew": 32,
-		"tileh": 8,
+		"tileh": 32,
 		"frames": 1
 	}
 }

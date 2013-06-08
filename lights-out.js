@@ -97,21 +97,6 @@ $(document).ready(function() {
 		}
 	});
 
-	// Q.Ui.Container.extend("ScoreCounter", {
-	// 	init: function(p) {
-
-	// 	}
-
-	// 	var container = new Q.UI.Container({
-	// 		x: 0, y: 0, fill: "gray"
-	// 	});
-
-	// 	var label = container.insert(new Q.UI.Text({ x: 0, y: 0, label: stage.options.label }))
-
-	// });
-
-	//var player = new Q.Player();
-
 	Q.scene("title", function(stage) {
 		stage.insert(new Q.Repeater({ asset: "background.png", speedX: 1, speedY: 1}));
 
@@ -147,11 +132,7 @@ $(document).ready(function() {
 
 		var player = stage.insert(new Q.Player());
 
-		// var container = stage.insert(new Q.UI.Container({
-		// 	x: player.p.x, y: player.p.y, fill: "gray"
-		// }));
-
-		// var label = container.insert(new Q.UI.Text({ x: 10, y: 10, label: "Score: " + player.p.score }));
+		stage.insert(new Q.Orb({ x: player.p.x + 64, y: Q.height - 64 }))
 
 		stage.insert(new Q.Gateway({ x: Q.width - 48, y: 144 }));
 
