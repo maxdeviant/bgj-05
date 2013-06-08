@@ -9,7 +9,7 @@
 	},
 	"gateway": {
 		"sx": 0,
-		"sy": 0,
+		"sy": 17,
 		"cols": 1,
 		"tilew": 32,
 		"tileh": 32,
@@ -17,7 +17,7 @@
 	},
 	"bounce-pad": {
 		"sx": 0,
-		"sy": 33,
+		"sy": 0,
 		"cols": 1,
 		"tilew": 32,
 		"tileh": 16,
