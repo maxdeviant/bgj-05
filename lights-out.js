@@ -15,17 +15,17 @@ $(document).ready(function() {
 			this._super(p, {
 				sheet: "player",
 				x: 64,
-				y: Q.height - 48,
-				score: 10000
+				y: Q.height - 48
 			});
 
 			this.add("2d, platformerControls");
 
 			this.on("hit.sprite", function(collision) {
 				if (collision.obj.isA("Gateway")) {
-					Q.stageScene(levels[currLevel], 1);
-					Q.stageScene("overlay", 1);
 					this.destroy();
+					Q.stageScene(levels[currLevel], 0);
+					Q.stageScene("overlay", 1);
+					Q.state.inc("score", 10);
 				}
 
 			});
@@ -43,7 +43,6 @@ $(document).ready(function() {
 			this._super(p, { sheet: "bounce-pad" });
 		
 			this.add("2d");
-
 
 			this.on("bump.top", function(collision) {
 				if (collision.obj.isA("Player")) {
@@ -73,14 +72,14 @@ $(document).ready(function() {
 			this.on("hit.sprite", function(collision) {
 				if (collision.obj.isA("Player")) {
 					this.destroy();
-					collision.obj.p.score += 1;
+					Q.state.inc("score", 1);
 				}
 			});
 		}
 	});
 
 	Q.UI.Text.extend("Score", {
-		init: function() {
+		init: function(p) {
 			this._super({
 				label: "Score: 0",
 				align: "center",
@@ -125,6 +124,7 @@ $(document).ready(function() {
 		var label = container.insert(new Q.UI.Text({ x: 0, y: -10 - button.p.h, label: stage.options.label }));
 
 		button.on("click", function() {
+			Q.state.set("score", 0);
 			Q.clearStages();
 			Q.stageScene("level-one");
 			Q.stageScene("overlay", 1);
