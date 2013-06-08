@@ -1,7 +1,7 @@
 {
 	"player": {
-		"sx": 32,
-		"sy": 0,
+		"sx": 0,
+		"sy": 50,
 		"cols": 1,
 		"tilew": 32,
 		"tileh": 32,
@@ -16,8 +16,8 @@
 		"frames": 1
 	},
 	"bounce-pad": {
-		"sx": 32,
-		"sy": 32,
+		"sx": 0,
+		"sy": 33,
 		"cols": 1,
 		"tilew": 32,
 		"tileh": 16,
@@ -25,10 +25,10 @@
 	},
 	"orb": {
 		"sx": 0,
-		"sy": 32,
+		"sy": 83,
 		"cols": 1,
-		"tilew": 32,
-		"tileh": 32,
+		"tilew": 15,
+		"tileh": 15,
 		"frames": 1
 	}
 }

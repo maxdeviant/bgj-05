@@ -132,7 +132,7 @@ $(document).ready(function() {
 
 		var player = stage.insert(new Q.Player());
 
-		stage.insert(new Q.Orb({ x: player.p.x + 64, y: Q.height - 64 }))
+		stage.insert(new Q.Orb({ x: player.p.x + 64, y: Q.height - 50 }))
 
 		stage.insert(new Q.Gateway({ x: Q.width - 48, y: 144 }));
 
