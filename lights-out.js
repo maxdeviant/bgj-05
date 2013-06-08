@@ -5,12 +5,14 @@ $(document).ready(function() {
 		.controls()
 		.touch();
 
+	var W = $('#lights-out');
+
 	Q.Sprite.extend("Player", {
 		init: function(p) {
 			this._super(p, {
 				asset: "player.png",
 				x: 64,
-				y: $('#lights-out').height() - 48
+				y: W.height() - 48
 			});
 
 			this.add("2d, platformerControls");
@@ -27,10 +29,10 @@ $(document).ready(function() {
 		}
 	});
 
-	Q.Sprite.extend("Air", {
+	Q.Sprite.extend("AirTile", {
 		init: function(p) {
 			this._super(p, {
-				asset: "air.png",
+				asset: "air-tile.png",
 				x: 0,
 				y: 0
 			});
@@ -43,27 +45,44 @@ $(document).ready(function() {
 
 		stage.insert(new Q.Repeater({ asset: "background.png", speedX: 0.5, speedY: 0.5}));
 
-		var player = stage.insert(new Q.Player());
-		var tiles = [];
-		
-		for (var i = 0; i < 30; i++) {
-			tiles[i] = stage.insert(new Q.Tile({
-				x: 16 + 32 * i,
-				y: $('#lights-out').height() - 16
-			}));
-		}
-
-		var air = stage.insert(new Q.Air({
-			x: 16,
-			y: 16
+		stage.collisionLayer(new Q.TileLayer({
+			dataAsset: "testlevel.json",
+			sheet: "tiles"
 		}));
+
+		var player = stage.insert(new Q.Player());
+		//var tiles = [];
+		//var AirTile = [];
+		
+		// for (var i = 0; i < 30; i++) {
+		// 	stage.insert(new Q.Tile({
+		// 		x: 16 + 32 * i,
+		// 		y: W.height() - 16
+		// 	}));
+		// }
+
+		// for (var i = 0; i < 18; i++) {
+		// 	stage.insert(new Q.AirTile({
+		// 		x: W.width() - 16,
+		// 		y: 8 + 32 * i
+		// 	}));
+
+		// 	stage.insert(new Q.AirTile({
+		// 		x: 16,
+		// 		y: 8 + 32 * i
+		// 	}));
+		// }
 
 		//stage.add("viewport").follow(player, { x: true, y: false })''
 
 		//stage.add("viewport");
 	});
 
-	Q.load("player.png, tile.png, air.png, background.png", function() {
+	Q.load("player.png, tiles.png, testlevel.json, background.png", function() {
+		Q.sheet("tiles", "tiles.png", { tilew: 32, tileh: 32 });
+
+		//Q.compileSheets("tiles.png", "testlevel.json");
+
 		Q.stageScene("testlevel");
 	});
 });
