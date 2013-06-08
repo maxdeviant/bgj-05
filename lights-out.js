@@ -15,7 +15,8 @@ $(document).ready(function() {
 			this._super(p, {
 				sheet: "player",
 				x: 64,
-				y: Q.height - 48
+				y: Q.height - 48,
+				score: 10000
 			});
 
 			this.add("2d, platformerControls");
@@ -23,6 +24,7 @@ $(document).ready(function() {
 			this.on("hit.sprite", function(collision) {
 				if (collision.obj.isA("Gateway")) {
 					Q.stageScene(levels[currLevel], 1);
+					Q.stageScene("overlay", 1);
 					this.destroy();
 				}
 
@@ -60,11 +62,54 @@ $(document).ready(function() {
 				if (collision.obj.isA("Player")) {
 					alert("switch activated");
 				}
-
 			});
-
 		}
 	});
+
+	Q.Sprite.extend("Orb", {
+		init: function(p) {
+			this._super(p, { sheet: "orb" });
+
+			this.on("hit.sprite", function(collision) {
+				if (collision.obj.isA("Player")) {
+					this.destroy();
+					collision.obj.p.score += 1;
+				}
+			});
+		}
+	});
+
+	Q.UI.Text.extend("Score", {
+		init: function() {
+			this._super({
+				label: "Score: 0",
+				align: "center",
+				x: 50,
+				y: 30,
+				weight: "normal",
+				size: 20
+			});
+
+			Q.state.on("change.score", this, "score")
+		},
+
+		score: function(score) {
+			this.p.label = "Score: " + score;
+		}
+	});
+
+	// Q.Ui.Container.extend("ScoreCounter", {
+	// 	init: function(p) {
+
+	// 	}
+
+	// 	var container = new Q.UI.Container({
+	// 		x: 0, y: 0, fill: "gray"
+	// 	});
+
+	// 	var label = container.insert(new Q.UI.Text({ x: 0, y: 0, label: stage.options.label }))
+
+	// });
 
 	//var player = new Q.Player();
 
@@ -82,10 +127,15 @@ $(document).ready(function() {
 		button.on("click", function() {
 			Q.clearStages();
 			Q.stageScene("level-one");
+			Q.stageScene("overlay", 1);
 		});
 
 		container.fit(20);
 	});
+
+	Q.scene("overlay", function(stage) {
+		stage.insert(new Q.Score());
+	}, { stage: 1 });
 
 	Q.scene("level-one", function(stage) {
 		stage.insert(new Q.Repeater({ asset: "background.png", speedX: 1, speedY: 1}));
@@ -96,6 +146,12 @@ $(document).ready(function() {
 		}));
 
 		var player = stage.insert(new Q.Player());
+
+		// var container = stage.insert(new Q.UI.Container({
+		// 	x: player.p.x, y: player.p.y, fill: "gray"
+		// }));
+
+		// var label = container.insert(new Q.UI.Text({ x: 10, y: 10, label: "Score: " + player.p.score }));
 
 		stage.insert(new Q.Gateway({ x: Q.width - 48, y: 144 }));
 
@@ -161,6 +217,6 @@ $(document).ready(function() {
 
 		Q.clearStages();
 		//Q.stageScene(levels[currLevel]);
-		Q.stageScene("title", 1, { label: "In Search Of Light" });
+		Q.stageScene("title", 0, { label: "In Search Of Light" });
 	});
 });
