@@ -29,6 +29,11 @@ $(document).ready(function() {
 				}
 
 			});
+		},
+
+		step: function(dt) {
+			Q.state.inc("time", dt);
+
 		}
 	});
 
@@ -97,6 +102,25 @@ $(document).ready(function() {
 		}
 	});
 
+	Q.UI.Text.extend("Time", {
+		init: function(p) {
+			this._super({
+				label: "Time: 0",
+				align: "center",
+				x: Q.width - 100,
+				y: 30,
+				weight: "normal",
+				size: 20
+			});
+
+			Q.state.on("change.time", this, "time");
+		},
+
+		time: function(time) {
+			this.p.label = "Time: " + time;
+		}
+	});
+
 	Q.scene("title", function(stage) {
 		stage.insert(new Q.Repeater({ asset: "background.png", speedX: 1, speedY: 1}));
 
@@ -110,6 +134,7 @@ $(document).ready(function() {
 
 		button.on("click", function() {
 			Q.state.set("score", 0);
+			Q.state.set("time", 0);
 			Q.clearStages();
 			Q.stageScene("level-one");
 			Q.stageScene("overlay", 1);
@@ -120,9 +145,11 @@ $(document).ready(function() {
 
 	Q.scene("overlay", function(stage) {
 		stage.insert(new Q.Score());
+		stage.insert(new Q.Time());
 	}, { stage: 1 });
 
 	Q.scene("level-one", function(stage) {
+		var time = new Date().getTime();
 		stage.insert(new Q.Repeater({ asset: "background.png", speedX: 1, speedY: 1}));
 
 		stage.collisionLayer(new Q.TileLayer({
@@ -191,12 +218,12 @@ $(document).ready(function() {
 	});
 
 	Q.load("sprites.png, sprites.json, tiles.png, level-one.json, level-two.json, level-three.json, background.png", function() {
+		Q.clearStages();
 		Q.sheet("tiles", "tiles.png", { tilew: 32, tileh: 32 });
 
 		Q.compileSheets("sprites.png", "sprites.json");
 		Q.compileSheets("tiles.png", "level-one.json");
 
-		Q.clearStages();
 		//Q.stageScene(levels[currLevel]);
 		Q.stageScene("title", 0, { label: "In Search Of Light" });
 	});
