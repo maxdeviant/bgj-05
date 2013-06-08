@@ -107,7 +107,7 @@ $(document).ready(function() {
 			this._super({
 				label: "Time: 0",
 				align: "center",
-				x: Q.width - 100,
+				x: Q.width - 80,
 				y: 30,
 				weight: "normal",
 				size: 20
@@ -117,7 +117,7 @@ $(document).ready(function() {
 		},
 
 		time: function(time) {
-			this.p.label = "Time: " + time;
+			this.p.label = "Time: " + time.toFixed(2);
 		}
 	});
 
