@@ -8,7 +8,7 @@ $(document).ready(function() {
 	var W = $('#lights-out');
 
 	var currLevel = 0;
-	var levels = ["level-one", "level-two"];
+	var levels = ["level-one", "level-two", "level-three"];
 
 	Q.Sprite.extend("Player", {
 		init: function(p) {
@@ -40,7 +40,7 @@ $(document).ready(function() {
 		init: function(p) {
 			this._super(p, { sheet: "bounce-pad" });
 		
-			this.add("2d, aiBounce");
+			this.add("2d");
 
 
 			this.on("bump.top", function(collision) {
@@ -49,6 +49,20 @@ $(document).ready(function() {
 				}
 
 			});
+		}
+	});
+
+	Q.Sprite.extend("Switch", {
+		init: function(p) {
+			this._super(p, { sheet: "switch-unactivated" });
+
+			this.on("bump.top", function(collision) {
+				if (collision.obj.isA("Player")) {
+					alert("switch activated");
+				}
+
+			});
+
 		}
 	});
 
@@ -82,13 +96,45 @@ $(document).ready(function() {
 
 		var player = stage.insert(new Q.Player());
 
-		stage.insert(new Q.BouncePad({ x: 128, y: W.height() - 48 }));
+		stage.insert(new Q.BouncePad({ x: 128, y: W.height() - 32 }));
+		stage.insert(new Q.BouncePad({ x: 240, y: W.height() - 256 }));
+		stage.insert(new Q.BouncePad({ x: W.width() - 7 * 32 + 16, y: W.height() - 12 * 32 }));
+
+		stage.insert(new Q.Gateway({ x: 64, y: 8 * 32 - 16}));
+
+		//stage.insert(new Q.Switch({ x: 256, y: W.height() - 32 }));
 
 		stage.add("viewport").follow(player, { x: true, y: true });
 		stage.viewport.scale = 2;
+
+		currLevel += 1;
 	});
 
-	Q.load("sprites.png, sprites.json, tiles.png, level-one.json, level-two.json, background.png", function() {
+	Q.scene("level-three", function(stage) {
+		stage.insert(new Q.Repeater({ asset: "background.png", speedX: 0.5, speedY: 0.5}));
+
+		stage.collisionLayer(new Q.TileLayer({
+			dataAsset: "level-three.json",
+			sheet: "tiles"
+		}));
+
+		var player = stage.insert(new Q.Player());
+
+		// stage.insert(new Q.BouncePad({ x: 128, y: W.height() - 32 }));
+		// stage.insert(new Q.BouncePad({ x: 240, y: W.height() - 256 }));
+		// stage.insert(new Q.BouncePad({ x: W.width() - 7 * 32 + 16, y: W.height() - 12 * 32 }));
+
+		// stage.insert(new Q.Gateway({ x: 64, y: 8 * 32 - 16}));
+
+		//stage.insert(new Q.Switch({ x: 256, y: W.height() - 32 }));
+
+		stage.add("viewport").follow(player, { x: true, y: true });
+		stage.viewport.scale = 2;
+
+		currLevel += 1;
+	});
+
+	Q.load("sprites.png, sprites.json, tiles.png, level-one.json, level-two.json, level-three.json, background.png", function() {
 		Q.sheet("tiles", "tiles.png", { tilew: 32, tileh: 32 });
 
 		Q.compileSheets("sprites.png", "sprites.json");
@@ -96,6 +142,6 @@ $(document).ready(function() {
 
 		Q.clearStages();
 		//Q.stageScene(levels[currLevel]);
-		Q.stageScene("level-two");
+		Q.stageScene("level-one");
 	});
 });

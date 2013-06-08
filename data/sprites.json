@@ -22,5 +22,21 @@
 		"tilew": 32,
 		"tileh": 16,
 		"frames": 1
+	},
+	"switch-unactivated": {
+		"sx": 0,
+		"sy": 80,
+		"cols": 1,
+		"tilew": 32,
+		"tileh": 16,
+		"frames": 1
+	},
+	"switch-activated": {
+		"sx": 0,
+		"sy": 88,
+		"cols": 1,
+		"tilew": 32,
+		"tileh": 8,
+		"frames": 1
 	}
 }
