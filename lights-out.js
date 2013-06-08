@@ -24,16 +24,14 @@ $(document).ready(function() {
 				if (collision.obj.isA("Gateway")) {
 					this.destroy();
 					Q.stageScene(levels[currLevel], 0);
-					Q.stageScene("overlay", 1);
+					Q.stageScene("hud", 1);
 					Q.state.inc("score", 10);
 				}
-
 			});
 		},
 
 		step: function(dt) {
 			Q.state.inc("time", dt);
-
 		}
 	});
 
@@ -83,6 +81,22 @@ $(document).ready(function() {
 		}
 	});
 
+	Q.Sprite.extend("Dark", {
+		init: function(p) {
+			this._super(p, {
+				color: "#000000",
+				w: Q.width,
+				h: Q.height
+			});
+		},
+		draw: function(ctx) {
+			ctx.fillStyle = this.p.color;
+			//ctx.globalAlpha = 0.5;
+			ctx.fillRect(0, 0, Q.width, Q.height);
+		}
+
+	});
+
 	Q.UI.Text.extend("Score", {
 		init: function(p) {
 			this._super({
@@ -106,7 +120,7 @@ $(document).ready(function() {
 		init: function(p) {
 			this._super({
 				label: "Time: 0",
-				align: "center",
+				align: "left",
 				x: Q.width - 80,
 				y: 30,
 				weight: "normal",
@@ -137,19 +151,18 @@ $(document).ready(function() {
 			Q.state.set("time", 0);
 			Q.clearStages();
 			Q.stageScene("level-one");
-			Q.stageScene("overlay", 1);
+			Q.stageScene("hud", 1);
 		});
 
 		container.fit(20);
 	});
 
-	Q.scene("overlay", function(stage) {
+	Q.scene("hud", function(stage) {
 		stage.insert(new Q.Score());
 		stage.insert(new Q.Time());
 	}, { stage: 1 });
 
 	Q.scene("level-one", function(stage) {
-		var time = new Date().getTime();
 		stage.insert(new Q.Repeater({ asset: "background.png", speedX: 1, speedY: 1}));
 
 		stage.collisionLayer(new Q.TileLayer({
@@ -162,6 +175,10 @@ $(document).ready(function() {
 		stage.insert(new Q.Orb({ x: player.p.x + 64, y: Q.height - 50 }))
 
 		stage.insert(new Q.Gateway({ x: Q.width - 48, y: 144 }));
+
+		var mask = new Q.Dark();
+		stage.insert(mask);
+		mask.render(Q.ctx);
 
 		stage.add("viewport").follow(player, { x: true, y: true });
 		stage.viewport.scale = 2;
