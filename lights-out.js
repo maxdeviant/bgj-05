@@ -130,7 +130,7 @@ $(document).ready(function() {
 			this.p.label = "Time: " + time.toFixed(2);
 		}
 	});
-
+	
 	Q.scene("title", function(stage) {
 		Q.audio.stop();
 		Q.load("title.mp3", function() {
