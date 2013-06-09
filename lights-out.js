@@ -130,14 +130,14 @@ $(document).ready(function() {
 			this.p.label = "Time: " + time.toFixed(2);
 		}
 	});
-	
+
 	Q.scene("title", function(stage) {
 		Q.audio.stop();
 		Q.load("title.mp3", function() {
 			Q.audio.play("title.mp3", { loop: true });
 		});
 
-		stage.insert(new Q.Repeater({ asset: "background.png", speedX: 1, speedY: 1}));
+		stage.insert(new Q.Repeater({ asset: "background.png", speedX: 1, speedY: 1 }));
 
 		var container = stage.insert(new Q.UI.Container({
 			x: Q.width / 2, y: Q.height / 2, fill: "gray"
@@ -180,9 +180,13 @@ $(document).ready(function() {
 		var score = container.insert(new Q.UI.Text({ x: 0, y: -5 - button.p.h, label: "Final Score: " + stage.options.label }));
 
 		button.on("click", function() {
-			currLevel = 0;
+			//currLevel = 0;
+			currLevel -= 1;
 			Q.clearStages();
-			Q.stageScene("title", 0, { label: "In Search Of Light" });
+			Q.stageScene("hud", 1);
+			Q.state.dec("score", 10);
+			//Q.stageScene("title", 0, { label: "In Search Of Light" });
+			Q.stageScene(levels[currLevel]);
 		});
 
 		container.fit(20);
