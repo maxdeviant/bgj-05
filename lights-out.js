@@ -7,7 +7,7 @@ $(document).ready(function() {
 
 	//var W = $('#lights-out');
 
-	var currLevel = 0;
+	var currLevel = 3;
 	var levels = ["level-one", "level-two", "level-three", "level-four"];
 
 	Q.Sprite.extend("Player", {
@@ -69,7 +69,6 @@ $(document).ready(function() {
 				if (collision.obj.isA("Player")) {
 					collision.obj.p.vy = -500;
 				}
-
 			});
 		}
 	});
@@ -140,8 +139,7 @@ $(document).ready(function() {
 			Q.state.set("score", 0);
 			Q.state.set("time", 0);
 			Q.clearStages();
-			//Q.stageScene("level-one");
-			Q.stageScene("level-three");
+			Q.stageScene(levels[currLevel]);
 			Q.stageScene("hud", 1);
 		});
 
@@ -246,7 +244,24 @@ $(document).ready(function() {
 	Q.scene("level-four", function(stage) {
 		stage.insert(new Q.Repeater({ asset: "background.png", speedX: 1, speedY: 1}));
 
-	})
+		stage.collisionLayer(new Q.TileLayer({
+			dataAsset: "level-four.json",
+			sheet: "tiles"
+		}));
+
+		var player = stage.insert(new Q.Player());
+
+		stage.insert(new Q.Enemy({ x: player.p.x + 160, y: Q.height - 96, vx: 200 }));
+
+		stage.insert(new Q.Enemy({ x: player.p.x + 360, y: Q.height - 96, vx: 200 }));
+
+		stage.insert(new Q.Gateway({ x: Q.width - 48 , y: Q.height - 48 }));
+
+		stage.add("viewport").follow(player, { x: true, y: true });
+		stage.viewport.scale = 2;
+
+		//currLevel += 1;
+	});
 
 	Q.load("sprites.png, sprites.json, tiles.png, level-one.json, level-two.json, level-three.json, level-four.json, background.png", function() {
 		Q.clearStages();
