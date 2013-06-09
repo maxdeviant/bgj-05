@@ -6,7 +6,7 @@ $(document).ready(function() {
 		.touch()
 		.enableSound();
 
-	var currLevel = 0;
+	var currLevel = 4;
 	var levels = ["level-one", "level-two", "level-three", "level-four", "level-five", "final-level"];
 
 	var highscores = [];
@@ -371,13 +371,15 @@ $(document).ready(function() {
 			sheet: "tiles"
 		}));
 
-		var player = stage.insert(new Q.Player({ y: Q.height - 10 * 32 }));
+		var player = stage.insert(new Q.Player({ y: Q.height - 9 * 32 }));
 
 		stage.insert(new Q.Enemy({ x: player.p.x + 160, y: Q.height - 8 * 32, vx: 300 }));
 
-		// stage.insert(new Q.Enemy({ x: player.p.x + 360, y: Q.height - 96, vx: 200 }));
+		stage.insert(new Q.Enemy({ x: player.p.x + 360, y: Q.height - 12 * 32, vx: 300 }));
 
-		// stage.insert(new Q.Gateway({ x: Q.width - 48 , y: Q.height - 48 }));
+		stage.insert(new Q.BouncePad({ x: Q.width - 64, y: Q.height - 10 * 32 }));
+
+		stage.insert(new Q.Gateway({ x: player.p.x, y: player.p.y - 144 }));
 
 		stage.add("viewport").follow(player, { x: true, y: true });
 		//stage.viewport.scale = 2;
