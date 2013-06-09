@@ -8,8 +8,12 @@ $(document).ready(function() {
 
 	//var W = $('#lights-out');
 
-	var currLevel = 0;
+	var currLevel = 3;
 	var levels = ["level-one", "level-two", "level-three", "level-four", "final-level"];
+
+	var highscores = [];
+
+	var name = "Player";
 
 	Q.Sprite.extend("Player", {
 		init: function(p) {
@@ -143,16 +147,23 @@ $(document).ready(function() {
 			x: Q.width / 2, y: Q.height / 2, fill: "gray"
 		}));
 
-		var button = container.insert(new Q.UI.Button({ x: 0, y: 0, fill: "white", label: "Start Game" }));
+		var play = container.insert(new Q.UI.Button({ x: 0, y: 0, fill: "white", label: "Start Game" }));
 
-		var label = container.insert(new Q.UI.Text({ x: 0, y: -10 - button.p.h, label: stage.options.label }));
+		var label = container.insert(new Q.UI.Text({ x: 0, y: -10 - play.p.h, label: stage.options.label }));
 
-		button.on("click", function() {
+		var highscore = container.insert(new Q.UI.Button({ x: 0, y: 50, fill: "white", label: "Highscores" }));
+
+		play.on("click", function() {
 			Q.state.set("score", 0);
 			Q.state.set("time", 0);
 			Q.clearStages();
 			Q.stageScene(levels[currLevel]);
 			Q.stageScene("hud", 1);
+		});
+
+		highscore.on("click", function() {
+			Q.clearStages();
+			Q.stageScene("highscores");
 		});
 
 		container.fit(20);
@@ -208,6 +219,28 @@ $(document).ready(function() {
 
 		var score = container.insert(new Q.UI.Text({ x: 0, y: -5 - button.p.h, label: "Final Score: " + stage.options.label }));
 
+		//var retrievedData = $.get("highscores.php");
+
+		//console.log(retrievedData);
+
+		//highscores = JSON.parse(retrievedData);
+
+		// console.log(retrievedData);
+
+		highscores.push(new Entry(name, Q.state.get("score"), Q.state.get("time").toFixed(2)));
+
+		sortScores(highscores);
+
+		// $.ajax({
+		// 	type: "POST",
+		// 	url: "highscores.php",
+		// 	json: JSON.stringify(highscores),
+		// 	success: console.log("true"),
+		// 	dataType: "text/json"
+		// });
+
+		$.post("highscores-save.php", { json: highscores });
+
 		button.on("click", function() {
 			currLevel = 0;
 			Q.clearStages();
@@ -215,6 +248,11 @@ $(document).ready(function() {
 		});
 
 	}, { stage: 1 });
+
+	Q.scene("highscores", function(stage) {
+
+
+	});
 
 	Q.scene("level-one", function(stage) {
 		Q.audio.stop();
@@ -318,4 +356,14 @@ $(document).ready(function() {
 
 		Q.stageScene("title", 0, { label: "In Search Of Light" });
 	});
+
+	function Entry(name, score, time) {
+		this.name = name;
+		this.score = score;
+		this.time = time;
+	}
+
+	function sortScores(highscores) {
+		highscores.sort(function(a, b) {return (a.score > b.score) ? 1 : 0});
+	}
 });
