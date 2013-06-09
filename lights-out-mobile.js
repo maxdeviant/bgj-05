@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	var Q = Quintus()
 		.include("Sprites, Scenes, Input, 2D, Anim, Audio, Touch, UI")
-		.setup("lights-out", { maximize: false })
+		.setup("lights-out", { maximize: true })
 		.controls()
 		.touch()
 		.enableSound();
@@ -174,7 +174,6 @@ $(document).ready(function() {
 		var score = container.insert(new Q.UI.Text({ x: 0, y: -5 - button.p.h, label: "Final Score: " + stage.options.label }));
 
 		button.on("click", function() {
-			currLevel = 0;
 			Q.clearStages();
 			Q.stageScene("title", 0, { label: "In Search Of Light" });
 		});
