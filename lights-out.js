@@ -219,13 +219,31 @@ $(document).ready(function() {
 
 		var score = container.insert(new Q.UI.Text({ x: 0, y: -5 - button.p.h, label: "Final Score: " + stage.options.label }));
 
-		//var retrievedData = $.get("highscores.php");
+		//var retrievedData;
 
-		$.get("highscores-load.php", function(data) {
-			console.log(JSON.parse(data));
-		});
+		function getValues() {
+			var result;
 
-		//console.log(retrievedData);
+			$.ajax({
+				url: "highscores-load.php",
+				type: "GET",
+				async: false,
+				cache: false,
+				success: function(data) {
+					result = data;
+				}
+
+			});
+			return result;
+		}
+
+		var retrievedData = getValues();
+
+		// $.get("highscores-load.php").done(function (data) {
+		// 	retrievedData = JSON.parse(data);
+		// });
+
+		console.log(retrievedData);
 
 		//highscores = JSON.parse(retrievedData);
 
