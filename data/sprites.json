@@ -1,7 +1,15 @@
 {
 	"player": {
 		"sx": 0,
-		"sy": 50,
+		"sy": 83,
+		"cols": 1,
+		"tilew": 32,
+		"tileh": 32,
+		"frames": 1
+	},
+	"enemy": {
+		"sx": 0,
+		"sy": 0,
 		"cols": 1,
 		"tilew": 32,
 		"tileh": 32,
@@ -9,7 +17,7 @@
 	},
 	"gateway": {
 		"sx": 0,
-		"sy": 17,
+		"sy": 50,
 		"cols": 1,
 		"tilew": 32,
 		"tileh": 32,
@@ -17,15 +25,15 @@
 	},
 	"bounce-pad": {
 		"sx": 0,
-		"sy": 0,
+		"sy": 33,
 		"cols": 1,
 		"tilew": 32,
 		"tileh": 16,
 		"frames": 1
 	},
 	"orb": {
-		"sx": 0,
-		"sy": 83,
+		"sx": 33,
+		"sy": 0,
 		"cols": 1,
 		"tilew": 15,
 		"tileh": 15,

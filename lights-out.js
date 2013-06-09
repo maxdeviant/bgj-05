@@ -8,7 +8,7 @@ $(document).ready(function() {
 	//var W = $('#lights-out');
 
 	var currLevel = 0;
-	var levels = ["level-one", "level-two", "level-three"];
+	var levels = ["level-one", "level-two", "level-three", "level-four"];
 
 	Q.Sprite.extend("Player", {
 		init: function(p) {
@@ -35,6 +35,24 @@ $(document).ready(function() {
 		}
 	});
 
+	Q.Sprite.extend("Enemy", {
+		init: function(p) {
+			this._super(p, {
+				sheet: "enemy",
+				vx: 100
+			});
+
+			this.add("2d, aiBounce");
+
+			this.on("hit.sprite", function(collision) {
+				if (collision.obj.isA("Player")) {
+					Q.stageScene("lose", 1, { label: Q.state.get("score") });
+					collision.obj.destroy();
+				}
+			});
+		}
+	});
+
 	Q.Sprite.extend("Gateway", {
 		init: function(p) {
 			this._super(p, { sheet: "gateway" });
@@ -52,18 +70,6 @@ $(document).ready(function() {
 					collision.obj.p.vy = -500;
 				}
 
-			});
-		}
-	});
-
-	Q.Sprite.extend("Switch", {
-		init: function(p) {
-			this._super(p, { sheet: "switch-unactivated" });
-
-			this.on("bump.top", function(collision) {
-				if (collision.obj.isA("Player")) {
-					alert("switch activated");
-				}
 			});
 		}
 	});
@@ -123,7 +129,7 @@ $(document).ready(function() {
 		stage.insert(new Q.Repeater({ asset: "background.png", speedX: 1, speedY: 1}));
 
 		var container = stage.insert(new Q.UI.Container({
-			x: Q.width / 2, y: Q.height / 2, fill: "#404040"
+			x: Q.width / 2, y: Q.height / 2, fill: "gray"
 		}));
 
 		var button = container.insert(new Q.UI.Button({ x: 0, y: 0, fill: "white", label: "Start Game" }));
@@ -134,7 +140,8 @@ $(document).ready(function() {
 			Q.state.set("score", 0);
 			Q.state.set("time", 0);
 			Q.clearStages();
-			Q.stageScene("level-one");
+			//Q.stageScene("level-one");
+			Q.stageScene("level-three");
 			Q.stageScene("hud", 1);
 		});
 
@@ -144,6 +151,30 @@ $(document).ready(function() {
 	Q.scene("hud", function(stage) {
 		stage.insert(new Q.Score());
 		stage.insert(new Q.Time());
+	}, { stage: 1 });
+
+	Q.scene("lose", function(stage) {
+		var container = stage.insert(new Q.UI.Container({
+			x: Q.width / 2, y: Q.height / 2, fill: "gray"
+		}));
+
+		var button = container.insert(new Q.UI.Button({ x: 0, y: 0, fill: "white", label: "Try Again?" }));
+
+		var label = container.insert(new Q.UI.Text({ x: 0, y: -40 - button.p.h, color: "red", label: "Triangulated!" }));
+
+		var score = container.insert(new Q.UI.Text({ x: 0, y: -5 - button.p.h, label: "Final Score: " + stage.options.label }));
+
+		button.on("click", function() {
+			Q.clearStages();
+			Q.stageScene("title", 0, { label: "In Search Of Light" });
+		});
+
+		container.fit(20);
+	}, { stage: 1 });
+
+	Q.scene("win", function(stage) {
+
+
 	}, { stage: 1 });
 
 	Q.scene("level-one", function(stage) {
@@ -167,7 +198,7 @@ $(document).ready(function() {
 	});
 
 	Q.scene("level-two", function(stage) {
-		stage.insert(new Q.Repeater({ asset: "background.png", speedX: 0.5, speedY: 0.5}));
+		stage.insert(new Q.Repeater({ asset: "background.png", speedX: 1, speedY: 1}));
 
 		stage.collisionLayer(new Q.TileLayer({
 			dataAsset: "level-two.json",
@@ -182,8 +213,6 @@ $(document).ready(function() {
 
 		stage.insert(new Q.Gateway({ x: 64, y: 8 * 32 - 16}));
 
-		//stage.insert(new Q.Switch({ x: 256, y: Q.height - 32 }));
-
 		stage.add("viewport").follow(player, { x: true, y: true });
 		stage.viewport.scale = 2;
 
@@ -191,7 +220,7 @@ $(document).ready(function() {
 	});
 
 	Q.scene("level-three", function(stage) {
-		stage.insert(new Q.Repeater({ asset: "background.png", speedX: 0.5, speedY: 0.5}));
+		stage.insert(new Q.Repeater({ asset: "background.png", speedX: 1, speedY: 1}));
 
 		stage.collisionLayer(new Q.TileLayer({
 			dataAsset: "level-three.json",
@@ -200,13 +229,13 @@ $(document).ready(function() {
 
 		var player = stage.insert(new Q.Player());
 
-		// stage.insert(new Q.BouncePad({ x: 128, y: Q.height - 32 }));
-		// stage.insert(new Q.BouncePad({ x: 240, y: Q.height - 256 }));
-		// stage.insert(new Q.BouncePad({ x: Q.width - 7 * 32 + 16, y: Q.height - 12 * 32 }));
+		var enemy = stage.insert(new Q.Enemy({ x: player.p.x + 120, y: Q.height - 64 }));
 
-		// stage.insert(new Q.Gateway({ x: 64, y: 8 * 32 - 16}));
+		stage.insert(new Q.Enemy({ x: enemy.p.x + 240, y: Q.height - 64 }));
 
-		//stage.insert(new Q.Switch({ x: 256, y: Q.height - 32 }));
+		stage.insert(new Q.BouncePad({ x: Q.width - 48, y: Q.height - 192 }));
+
+		stage.insert(new Q.Gateway({ x: Q.width - 112 , y: 13 * 32 - 16}));
 
 		stage.add("viewport").follow(player, { x: true, y: true });
 		stage.viewport.scale = 2;
@@ -214,14 +243,18 @@ $(document).ready(function() {
 		currLevel += 1;
 	});
 
-	Q.load("sprites.png, sprites.json, tiles.png, level-one.json, level-two.json, level-three.json, background.png", function() {
+	Q.scene("level-four", function(stage) {
+		stage.insert(new Q.Repeater({ asset: "background.png", speedX: 1, speedY: 1}));
+
+	})
+
+	Q.load("sprites.png, sprites.json, tiles.png, level-one.json, level-two.json, level-three.json, level-four.json, background.png", function() {
 		Q.clearStages();
 		Q.sheet("tiles", "tiles.png", { tilew: 32, tileh: 32 });
 
 		Q.compileSheets("sprites.png", "sprites.json");
 		Q.compileSheets("tiles.png", "level-one.json");
 
-		//Q.stageScene(levels[currLevel]);
 		Q.stageScene("title", 0, { label: "In Search Of Light" });
 	});
 });
