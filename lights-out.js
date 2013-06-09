@@ -221,6 +221,10 @@ $(document).ready(function() {
 
 		//var retrievedData = $.get("highscores.php");
 
+		$.get("highscores-load.php", function(data) {
+			console.log(JSON.parse(data));
+		});
+
 		//console.log(retrievedData);
 
 		//highscores = JSON.parse(retrievedData);
