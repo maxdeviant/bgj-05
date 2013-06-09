@@ -9,7 +9,7 @@ $(document).ready(function() {
 	//var W = $('#lights-out');
 
 	var currLevel = 0;
-	var levels = ["level-one", "level-two", "level-three", "level-four"];
+	var levels = ["level-one", "level-two", "level-three", "level-four", "final-level"];
 
 	Q.Sprite.extend("Player", {
 		init: function(p) {
@@ -24,9 +24,15 @@ $(document).ready(function() {
 			this.on("hit.sprite", function(collision) {
 				if (collision.obj.isA("Gateway")) {
 					this.destroy();
-					Q.stageScene(levels[currLevel], 0);
-					Q.stageScene("hud", 1);
-					Q.state.inc("score", 10);
+
+					if (levels[currLevel] === "final-level") {
+						Q.state.inc("score", 1000);
+						Q.stageScene("win", 1, { label: Q.state.get("score") });
+					} else {
+						Q.stageScene(levels[currLevel], 0);
+						Q.stageScene("hud", 1);
+						Q.state.inc("score", 10);
+					}
 				}
 			});
 		},
@@ -183,7 +189,26 @@ $(document).ready(function() {
 	}, { stage: 1 });
 
 	Q.scene("win", function(stage) {
+		Q.audio.stop();
+		// Q.load("", function() {
+		// 	Q.audio.play("", { loop: true });
+		// });
 
+		var container = stage.insert(new Q.UI.Container({
+			x: Q.width / 2, y: Q.height / 2, fill: "gray"
+		}));
+
+		var button = container.insert(new Q.UI.Button({ x: 0, y: 0, fill: "white", label: "Menu" }));
+
+		var label = container.insert(new Q.UI.Text({ x: 0, y: -40 - button.p.h, color: "yellow", label: "Victorious!" }));
+
+		var score = container.insert(new Q.UI.Text({ x: 0, y: -5 - button.p.h, label: "Final Score: " + stage.options.label }));
+
+		button.on("click", function() {
+			currLevel = 0;
+			Q.clearStages();
+			Q.stageScene("title", 0, { label: "In Search Of Light" });
+		});
 
 	}, { stage: 1 });
 
@@ -277,7 +302,7 @@ $(document).ready(function() {
 		stage.add("viewport").follow(player, { x: true, y: true });
 		stage.viewport.scale = 2;
 
-		//currLevel += 1;
+		currLevel += 1;
 	});
 
 	Q.load("sprites.png, sprites.json, tiles.png, level-one.json, level-two.json, level-three.json, level-four.json, background.png", function() {
