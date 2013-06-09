@@ -137,8 +137,8 @@ $(document).ready(function() {
 
 	Q.scene("title", function(stage) {
 		Q.audio.stop();
-		Q.load("title.mp3", function() {
-			Q.audio.play("title.mp3", { loop: true });
+		Q.load("adventure.mp3", function() {
+			Q.audio.play("adventure.mp3", { loop: true });
 		});
 
 		stage.insert(new Q.Repeater({ asset: "background.png", speedX: 1, speedY: 1 }));
@@ -217,7 +217,7 @@ $(document).ready(function() {
 	}, { stage: 1 });
 
 	Q.scene("win", function(stage) {
-		Q.audio.stop();
+		//Q.audio.stop();
 		// Q.load("", function() {
 		// 	Q.audio.play("", { loop: true });
 		// });
@@ -265,8 +265,6 @@ $(document).ready(function() {
 				Q.stageScene("title", 0, { label: "In Search Of Light" });
 			});
 		}
-
-		//var label = container.insert(new Q.UI.Text({ x: 0, y: 0, color: "yellow", label: "Victorious!" }));
 
 		container.fit(30);
 
