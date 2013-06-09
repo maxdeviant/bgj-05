@@ -8,7 +8,7 @@ $(document).ready(function() {
 
 	//var W = $('#lights-out');
 
-	var currLevel = 3;
+	var currLevel = 0;
 	var levels = ["level-one", "level-two", "level-three", "level-four"];
 
 	Q.Sprite.extend("Player", {
@@ -126,6 +126,11 @@ $(document).ready(function() {
 	});
 
 	Q.scene("title", function(stage) {
+		Q.audio.stop();
+		Q.load("title.mp3", function() {
+			Q.audio.play("title.mp3", { loop: true });
+		});
+
 		stage.insert(new Q.Repeater({ asset: "background.png", speedX: 1, speedY: 1}));
 
 		var container = stage.insert(new Q.UI.Container({
@@ -153,6 +158,11 @@ $(document).ready(function() {
 	}, { stage: 1 });
 
 	Q.scene("lose", function(stage) {
+		Q.audio.stop();
+		Q.load("lose.mp3", function() {
+			Q.audio.play("lose.mp3", { loop: true });
+		});
+
 		var container = stage.insert(new Q.UI.Container({
 			x: Q.width / 2, y: Q.height / 2, fill: "gray"
 		}));
@@ -177,6 +187,11 @@ $(document).ready(function() {
 	}, { stage: 1 });
 
 	Q.scene("level-one", function(stage) {
+		Q.audio.stop();
+		Q.load("vagabonds.mp3", function() {
+			Q.audio.play("vagabonds.mp3", { loop: true });
+		});
+
 		stage.insert(new Q.Repeater({ asset: "background.png", speedX: 1, speedY: 1}));
 
 		stage.collisionLayer(new Q.TileLayer({
