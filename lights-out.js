@@ -163,7 +163,7 @@ $(document).ready(function() {
 
 		highscore.on("click", function() {
 			Q.clearStages();
-			Q.stageScene("highscores");
+			Q.stageScene("highscores", 0);
 		});
 
 		container.fit(20);
@@ -218,51 +218,38 @@ $(document).ready(function() {
 		var label = container.insert(new Q.UI.Text({ x: 0, y: -40 - button.p.h, color: "yellow", label: "Victorious!" }));
 
 		var score = container.insert(new Q.UI.Text({ x: 0, y: -5 - button.p.h, label: "Final Score: " + stage.options.label }));
-
-		//var retrievedData;
-
-		//var r = JSON.parse(getValues());
-		//console.log(r);
-
 		
-
-		// $.get("highscores-load.php").done(function (data) {
-		// 	retrievedData = JSON.parse(data);
-		// });
-
-		//console.log(retrievedData);
-
-		//highscores = JSON.parse(retrievedData);
-
-		// console.log(retrievedData);
-
-		
-
-		// $.ajax({
-		// 	type: "POST",
-		// 	url: "highscores.php",
-		// 	json: JSON.stringify(highscores),
-		// 	success: console.log("true"),
-		// 	dataType: "text/json"
-		// });
-
-		
-
 		button.on("click", function() {
 			currLevel = 0;
 			Q.clearStages();
-
 			updateHighscores();
-
 			Q.stageScene("title", 0, { label: "In Search Of Light" });
 		});
 
 	}, { stage: 1 });
 
 	Q.scene("highscores", function(stage) {
+		var data = JSON.parse(getValues());
+		var highscores = sortScores(data);
 
+		stage.insert(new Q.Repeater({ asset: "background.png", speedX: 1, speedY: 1 }));
 
-	});
+		var container = stage.insert(new Q.UI.Container({
+			x: Q.width / 6, y: 50, fill: "gray"
+		}));
+
+		for (var i = 0; i < highscores.length; i++) {
+			container.insert(new Q.UI.Text({ x: 10, y: 10 + i * 50, fill: "white", label: "Name: " + highscores[i].name }));
+			container.insert(new Q.UI.Text({ x: 310, y: 10 + i * 50, fill: "white", label: "Score: " + highscores[i].score }));
+
+			container.insert(new Q.UI.Text({ x: 610, y: 10 + i * 50, fill: "white", label: "Time: " + highscores[i].time }));
+		}
+
+		//var label = container.insert(new Q.UI.Text({ x: 0, y: 0, color: "yellow", label: "Victorious!" }));
+
+		container.fit(30);
+
+	}, { stage: 1 });
 
 	Q.scene("level-one", function(stage) {
 		Q.audio.stop();
@@ -378,13 +365,15 @@ $(document).ready(function() {
 
 		highscores.push(new Entry(name, Q.state.get("score"), Q.state.get("time").toFixed(2)));
 
-		sortScores(highscores);
+		highscores = sortScores(highscores);
 
 		$.post("highscores-save.php", { json: highscores });
 	}
 
 	function sortScores(highscores) {
-		highscores.sort(function(a, b) {return (a.score < b.score) ? 1 : 0});
+		highscores.sort(function(a,b) {return a.scores-b.scores});
+
+		return highscores;
 	}
 
 	function getValues() {
