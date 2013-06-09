@@ -6,10 +6,8 @@ $(document).ready(function() {
 		.touch()
 		.enableSound();
 
-	//var W = $('#lights-out');
-
-	var currLevel = 3;
-	var levels = ["level-one", "level-two", "level-three", "level-four", "final-level"];
+	var currLevel = 0;
+	var levels = ["level-one", "level-two", "level-three", "level-four", "level-five", "final-level"];
 
 	var highscores = [];
 
@@ -105,6 +103,7 @@ $(document).ready(function() {
 				x: 50,
 				y: 30,
 				weight: "normal",
+				color: "white",
 				size: 20
 			});
 
@@ -124,6 +123,7 @@ $(document).ready(function() {
 				x: Q.width - 80,
 				y: 30,
 				weight: "normal",
+				color: "white",
 				size: 20
 			});
 
@@ -172,6 +172,13 @@ $(document).ready(function() {
 	Q.scene("hud", function(stage) {
 		stage.insert(new Q.Score());
 		stage.insert(new Q.Time());
+		var quit = stage.insert(new Q.UI.Button({ x: Q.width - 50, y: Q.height - 30, fill: "white", label: "Menu" }));
+
+		quit.on("click", function() {
+			currLevel = 0;
+			Q.clearStages();
+			Q.stageScene("title", 0, { label: "In Search Of Light" });
+		});
 	}, { stage: 1 });
 
 	Q.scene("lose", function(stage) {
@@ -184,20 +191,26 @@ $(document).ready(function() {
 			x: Q.width / 2, y: Q.height / 2, fill: "gray"
 		}));
 
-		var button = container.insert(new Q.UI.Button({ x: 0, y: 0, fill: "white", label: "Try Again?" }));
+		var again = container.insert(new Q.UI.Button({ x: 0, y: 0, fill: "white", label: "Try Again?" }));
 
-		var label = container.insert(new Q.UI.Text({ x: 0, y: -40 - button.p.h, color: "red", label: "Triangulated!" }));
+		var label = container.insert(new Q.UI.Text({ x: 0, y: -40 - again.p.h, color: "red", label: "Triangulated!" }));
 
-		var score = container.insert(new Q.UI.Text({ x: 0, y: -5 - button.p.h, label: "Final Score: " + stage.options.label }));
+		var score = container.insert(new Q.UI.Text({ x: 0, y: -5 - again.p.h, label: "Final Score: " + stage.options.label }));
 
-		button.on("click", function() {
-			//currLevel = 0;
+		var quit = container.insert(new Q.UI.Button({ x: 0, y: again.p.h + 10, fill: "red", label: "Quit" }));
+
+		again.on("click", function() {
 			currLevel -= 1;
 			Q.clearStages();
 			Q.stageScene("hud", 1);
 			Q.state.dec("score", 10);
-			//Q.stageScene("title", 0, { label: "In Search Of Light" });
 			Q.stageScene(levels[currLevel]);
+		});
+
+		quit.on("click", function() {
+			currLevel = 0;
+			Q.clearStages();
+			Q.stageScene("title", 0, { label: "In Search Of Light" });
 		});
 
 		container.fit(20);
@@ -229,8 +242,9 @@ $(document).ready(function() {
 	}, { stage: 1 });
 
 	Q.scene("highscores", function(stage) {
-		var data = JSON.parse(getValues());
-		var highscores = sortScores(data);
+		var highscores = JSON.parse(getValues());
+
+		highscores.sort(function(a, b) { return (a.score > b.score) ? -1 : (a.score < b.score) ? 1 : 0 });
 
 		stage.insert(new Q.Repeater({ asset: "background.png", speedX: 1, speedY: 1 }));
 
@@ -351,7 +365,29 @@ $(document).ready(function() {
 		currLevel += 1;
 	});
 
-	Q.load("sprites.png, sprites.json, tiles.png, level-one.json, level-two.json, level-three.json, level-four.json, background.png", function() {
+	Q.scene("level-five", function(stage) {
+		stage.insert(new Q.Repeater({ asset: "background.png", speedX: 1, speedY: 1}));
+
+		stage.collisionLayer(new Q.TileLayer({
+			dataAsset: "level-five.json",
+			sheet: "tiles"
+		}));
+
+		var player = stage.insert(new Q.Player({ y: Q.height - 10 * 32 }));
+
+		stage.insert(new Q.Enemy({ x: player.p.x + 160, y: Q.height - 8 * 32, vx: 300 }));
+
+		// stage.insert(new Q.Enemy({ x: player.p.x + 360, y: Q.height - 96, vx: 200 }));
+
+		// stage.insert(new Q.Gateway({ x: Q.width - 48 , y: Q.height - 48 }));
+
+		stage.add("viewport").follow(player, { x: true, y: true });
+		//stage.viewport.scale = 2;
+
+		currLevel += 1;
+	});
+
+	Q.load("sprites.png, sprites.json, tiles.png, level-one.json, level-two.json, level-three.json, level-four.json, level-five.json, background.png", function() {
 		Q.clearStages();
 		Q.sheet("tiles", "tiles.png", { tilew: 32, tileh: 32 });
 
