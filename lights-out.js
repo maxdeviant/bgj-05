@@ -1,9 +1,10 @@
 $(document).ready(function() {
 	var Q = Quintus()
-		.include("Sprites, Scenes, Input, 2D, Anim, Touch, UI")
+		.include("Sprites, Scenes, Input, 2D, Anim, Audio, Touch, UI")
 		.setup("lights-out", { maximize: false })
 		.controls()
-		.touch();
+		.touch()
+		.enableSound();
 
 	//var W = $('#lights-out');
 
