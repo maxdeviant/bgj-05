@@ -238,11 +238,18 @@ $(document).ready(function() {
 			x: Q.width / 6, y: 50, fill: "gray"
 		}));
 
-		for (var i = 0; i < highscores.length; i++) {
-			container.insert(new Q.UI.Text({ x: 10, y: 10 + i * 50, fill: "white", label: "Name: " + highscores[i].name }));
-			container.insert(new Q.UI.Text({ x: 310, y: 10 + i * 50, fill: "white", label: "Score: " + highscores[i].score }));
+		var button = container.insert(new Q.UI.Button({ x: 650, y: 10, fill: "white", label: "Menu" }));
 
-			container.insert(new Q.UI.Text({ x: 610, y: 10 + i * 50, fill: "white", label: "Time: " + highscores[i].time }));
+		for (var i = 0; i < highscores.length; i++) {
+			container.insert(new Q.UI.Text({ x: 10, y: 70 + i * 50, fill: "white", label: (i + 1) + ") Name: " + highscores[i].name }));
+			container.insert(new Q.UI.Text({ x: 310, y: 70 + i * 50, fill: "white", label: "Score: " + highscores[i].score }));
+
+			container.insert(new Q.UI.Text({ x: 610, y: 70 + i * 50, fill: "white", label: "Time: " + highscores[i].time }));
+
+			button.on("click", function() {
+				Q.clearStages();
+				Q.stageScene("title", 0, { label: "In Search Of Light" });
+			});
 		}
 
 		//var label = container.insert(new Q.UI.Text({ x: 0, y: 0, color: "yellow", label: "Victorious!" }));
