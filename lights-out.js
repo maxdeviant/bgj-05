@@ -221,37 +221,22 @@ $(document).ready(function() {
 
 		//var retrievedData;
 
-		function getValues() {
-			var result;
+		//var r = JSON.parse(getValues());
+		//console.log(r);
 
-			$.ajax({
-				url: "highscores-load.php",
-				type: "GET",
-				async: false,
-				cache: false,
-				success: function(data) {
-					result = data;
-				}
-
-			});
-			return result;
-		}
-
-		var retrievedData = getValues();
+		
 
 		// $.get("highscores-load.php").done(function (data) {
 		// 	retrievedData = JSON.parse(data);
 		// });
 
-		console.log(retrievedData);
+		//console.log(retrievedData);
 
 		//highscores = JSON.parse(retrievedData);
 
 		// console.log(retrievedData);
 
-		highscores.push(new Entry(name, Q.state.get("score"), Q.state.get("time").toFixed(2)));
-
-		sortScores(highscores);
+		
 
 		// $.ajax({
 		// 	type: "POST",
@@ -261,11 +246,14 @@ $(document).ready(function() {
 		// 	dataType: "text/json"
 		// });
 
-		$.post("highscores-save.php", { json: highscores });
+		
 
 		button.on("click", function() {
 			currLevel = 0;
 			Q.clearStages();
+
+			updateHighscores();
+
 			Q.stageScene("title", 0, { label: "In Search Of Light" });
 		});
 
@@ -385,7 +373,33 @@ $(document).ready(function() {
 		this.time = time;
 	}
 
+	function updateHighscores() {
+		highscores = JSON.parse(getValues());
+
+		highscores.push(new Entry(name, Q.state.get("score"), Q.state.get("time").toFixed(2)));
+
+		sortScores(highscores);
+
+		$.post("highscores-save.php", { json: highscores });
+	}
+
 	function sortScores(highscores) {
-		highscores.sort(function(a, b) {return (a.score > b.score) ? 1 : 0});
+		highscores.sort(function(a, b) {return (a.score < b.score) ? 1 : 0});
+	}
+
+	function getValues() {
+		var result;
+
+		$.ajax({
+			url: "highscores-load.php",
+			type: "GET",
+			async: false,
+			cache: false,
+			success: function(data) {
+				result = data;
+			}
+		});
+		
+		return result;
 	}
 });
