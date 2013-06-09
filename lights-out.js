@@ -6,7 +6,7 @@ $(document).ready(function() {
 		.touch()
 		.enableSound();
 
-	var currLevel = 4;
+	var currLevel = 0;
 	var levels = ["level-one", "level-two", "level-three", "level-four", "level-five", "final-level"];
 
 	var highscores = [];
@@ -17,8 +17,8 @@ $(document).ready(function() {
 		init: function(p) {
 			this._super(p, {
 				sheet: "player",
-				x: 64,
-				y: Q.height - 48
+				x: 0,
+				y: 0
 			});
 
 			this.add("2d, platformerControls");
@@ -41,6 +41,7 @@ $(document).ready(function() {
 
 		step: function(dt) {
 			Q.state.inc("time", dt);
+			console.log(this.p.x + ", " + this.p.y);
 		}
 	});
 
@@ -55,8 +56,8 @@ $(document).ready(function() {
 
 			this.on("hit.sprite", function(collision) {
 				if (collision.obj.isA("Player")) {
-					Q.stageScene("lose", 1, { label: Q.state.get("score") });
-					collision.obj.destroy();
+					// Q.stageScene("lose", 1, { label: Q.state.get("score") });
+					// collision.obj.destroy();
 				}
 			});
 		}
@@ -283,11 +284,39 @@ $(document).ready(function() {
 			sheet: "tiles"
 		}));
 
-		var player = stage.insert(new Q.Player());
+		var player = stage.insert(new Q.Player({ x: 80, y: 592 }));
 
-		stage.insert(new Q.Orb({ x: player.p.x + 64, y: Q.height - 50 }))
+		for (var i = 0; i < 10; i++) {
+			stage.insert(new Q.Orb({ x: player.p.x + i * 64, y: Q.height - 50 }));
+		}
 
-		stage.insert(new Q.Gateway({ x: Q.width - 48, y: 144 }));
+		stage.insert(new Q.Orb({ x: 720, y: 560 }));
+		stage.insert(new Q.Orb({ x: 752, y: 528 }));
+		stage.insert(new Q.Orb({ x: 784, y: 496 }));
+		stage.insert(new Q.Orb({ x: 816, y: 464 }));
+		stage.insert(new Q.Orb({ x: 848, y: 432 }));
+		stage.insert(new Q.Orb({ x: 784, y: 400 }));
+		stage.insert(new Q.Orb({ x: 752, y: 368 }));
+		stage.insert(new Q.Orb({ x: 720, y: 336 }));
+		stage.insert(new Q.Orb({ x: 688, y: 304 }));
+		stage.insert(new Q.Orb({ x: 622, y: 272 }));
+		stage.insert(new Q.Orb({ x: 560, y: 304 }));
+		stage.insert(new Q.Orb({ x: 528, y: 336 }));
+		stage.insert(new Q.Orb({ x: 400, y: 336 }));
+		stage.insert(new Q.Orb({ x: 368, y: 304 }));
+		stage.insert(new Q.Orb({ x: 272, y: 272 }));
+		stage.insert(new Q.Orb({ x: 208, y: 272 }));
+		stage.insert(new Q.Orb({ x: 240, y: 240 }));
+		stage.insert(new Q.Orb({ x: 305, y: 208 }));
+		stage.insert(new Q.Orb({ x: 361, y: 176 }));
+		stage.insert(new Q.Orb({ x: 432, y: 144 }));
+		stage.insert(new Q.Orb({ x: 464, y: 112 }));
+		stage.insert(new Q.Orb({ x: 532, y: 80  }));
+		stage.insert(new Q.Orb({ x: 606, y: 80  }));
+		stage.insert(new Q.Orb({ x: 668, y: 80  }));
+		stage.insert(new Q.Orb({ x: 752, y: 112 }));
+
+		stage.insert(new Q.Gateway({ x: 848, y: 144 }));
 
 		stage.add("viewport").follow(player, { x: true, y: true });
 		stage.viewport.scale = 2;
@@ -303,13 +332,35 @@ $(document).ready(function() {
 			sheet: "tiles"
 		}));
 
-		var player = stage.insert(new Q.Player());
+		var player = stage.insert(new Q.Player({ x: 75, y: 592 }));
 
-		stage.insert(new Q.BouncePad({ x: 128, y: Q.height - 32 }));
-		stage.insert(new Q.BouncePad({ x: 240, y: Q.height - 256 }));
-		stage.insert(new Q.BouncePad({ x: Q.width - 7 * 32 + 16, y: Q.height - 12 * 32 }));
+		stage.insert(new Q.BouncePad({ x: 130, y: 592 }));
+		stage.insert(new Q.BouncePad({ x: 240, y: 432 }));
+		stage.insert(new Q.BouncePad({ x: 688, y: 368 }));
 
-		stage.insert(new Q.Gateway({ x: 64, y: 8 * 32 - 16}));
+		//stage.insert(new Q.Orb({ x: 128, y: 550 }));
+		stage.insert(new Q.Orb({ x: 48,  y: 464 }));
+		stage.insert(new Q.Orb({ x: 185, y: 432 }));
+		//stage.insert(new Q.Orb({ x: 240, y: 350 }));
+		stage.insert(new Q.Orb({ x: 304, y: 304 }));
+		stage.insert(new Q.Orb({ x: 336, y: 272 }));
+		stage.insert(new Q.Orb({ x: 368, y: 240 }));
+		stage.insert(new Q.Orb({ x: 434, y: 208 }));
+		stage.insert(new Q.Orb({ x: 496, y: 368 }));
+		stage.insert(new Q.Orb({ x: 557, y: 368 }));
+		stage.insert(new Q.Orb({ x: 625, y: 368 }));
+		//stage.insert(new Q.Orb({ x: 688, y: 260 }));
+		stage.insert(new Q.Orb({ x: 656, y: 240 }));
+		stage.insert(new Q.Orb({ x: 592, y: 208 }));
+		stage.insert(new Q.Orb({ x: 560, y: 176 }));
+		stage.insert(new Q.Orb({ x: 528, y: 144 }));
+		stage.insert(new Q.Orb({ x: 463, y: 112 }));
+		stage.insert(new Q.Orb({ x: 365, y: 144 }));
+		stage.insert(new Q.Orb({ x: 301, y: 144 }));
+		stage.insert(new Q.Orb({ x: 237, y: 144 }));
+		stage.insert(new Q.Orb({ x: 138, y: 144 }));
+
+		stage.insert(new Q.Gateway({ x: 64, y: 240 }));
 
 		stage.add("viewport").follow(player, { x: true, y: true });
 		stage.viewport.scale = 2;
@@ -325,15 +376,20 @@ $(document).ready(function() {
 			sheet: "tiles"
 		}));
 
-		var player = stage.insert(new Q.Player());
+		var player = stage.insert(new Q.Player({x: 60, y: 592 }));
 
-		var enemy = stage.insert(new Q.Enemy({ x: player.p.x + 120, y: Q.height - 64 }));
+		stage.insert(new Q.Enemy({ x: 144, y: 592 }));
 
-		stage.insert(new Q.Enemy({ x: enemy.p.x + 240, y: Q.height - 64 }));
+		stage.insert(new Q.Enemy({ x: 464, y: 592 }));
 
-		stage.insert(new Q.BouncePad({ x: Q.width - 48, y: Q.height - 192 }));
+		stage.insert(new Q.BouncePad({ x: 848, y: 528 }));
 
-		stage.insert(new Q.Gateway({ x: Q.width - 112 , y: 13 * 32 - 16}));
+		stage.insert(new Q.Orb({ x: 113, y: 560 }));
+		stage.insert(new Q.Orb({ x: 433, y: 560 }));
+		stage.insert(new Q.Orb({ x: 752, y: 560 }));
+		stage.insert(new Q.Orb({ x: 809, y: 528 }));
+
+		stage.insert(new Q.Gateway({ x: 785 , y: 400 }));
 
 		stage.add("viewport").follow(player, { x: true, y: true });
 		stage.viewport.scale = 2;
@@ -349,13 +405,22 @@ $(document).ready(function() {
 			sheet: "tiles"
 		}));
 
-		var player = stage.insert(new Q.Player());
+		var player = stage.insert(new Q.Player({ x: 48, y: 592 }));
 
-		stage.insert(new Q.Enemy({ x: player.p.x + 160, y: Q.height - 96, vx: 200 }));
+		stage.insert(new Q.Enemy({ x: 208, y: 560, vx: 200 }));
 
-		stage.insert(new Q.Enemy({ x: player.p.x + 360, y: Q.height - 96, vx: 200 }));
+		stage.insert(new Q.Enemy({ x: 560, y: 560, vx: 200 }));
 
-		stage.insert(new Q.Gateway({ x: Q.width - 48 , y: Q.height - 48 }));
+		stage.insert(new Q.Orb({ x: 112, y: 592 }));
+		stage.insert(new Q.Orb({ x: 144, y: 560 }));
+		stage.insert(new Q.Orb({ x: 175, y: 528 }));
+		stage.insert(new Q.Orb({ x: 592, y: 528 }));
+		stage.insert(new Q.Orb({ x: 624, y: 560 }));
+		stage.insert(new Q.Orb({ x: 656, y: 592 }));
+		stage.insert(new Q.Orb({ x: 719, y: 592 }));
+		stage.insert(new Q.Orb({ x: 764, y: 592 }));
+
+		stage.insert(new Q.Gateway({ x: 848 , y: 592 }));
 
 		stage.add("viewport").follow(player, { x: true, y: true });
 		stage.viewport.scale = 2;
@@ -371,18 +436,30 @@ $(document).ready(function() {
 			sheet: "tiles"
 		}));
 
-		var player = stage.insert(new Q.Player({ y: Q.height - 9 * 32 }));
+		var player = stage.insert(new Q.Player({ x: 62, y: 336 }));
 
-		stage.insert(new Q.Enemy({ x: player.p.x + 160, y: Q.height - 8 * 32, vx: 300 }));
+		stage.insert(new Q.Enemy({ x: 176, y: 432, vx: 300 }));
 
-		stage.insert(new Q.Enemy({ x: player.p.x + 360, y: Q.height - 12 * 32, vx: 300 }));
+		stage.insert(new Q.Enemy({ x: 656, y: 240, vx: 300 }));
 
-		stage.insert(new Q.BouncePad({ x: Q.width - 64, y: Q.height - 10 * 32 }));
+		stage.insert(new Q.BouncePad({ x: 848, y: 304 }));
 
-		stage.insert(new Q.Gateway({ x: player.p.x, y: player.p.y - 144 }));
+		stage.insert(new Q.Orb({ x: 113, y: 336 }));
+		stage.insert(new Q.Orb({ x: 144, y: 368 }));
+		stage.insert(new Q.Orb({ x: 624, y: 400 }));
+		stage.insert(new Q.Orb({ x: 656, y: 368 }));
+		stage.insert(new Q.Orb({ x: 688, y: 336 }));
+		stage.insert(new Q.Orb({ x: 722, y: 304 }));
+		stage.insert(new Q.Orb({ x: 779, y: 304 }));
+		stage.insert(new Q.Orb({ x: 784, y: 208 }));
+		stage.insert(new Q.Orb({ x: 739, y: 208 }));
+		stage.insert(new Q.Orb({ x: 699, y: 208 }));
+		stage.insert(new Q.Orb({ x: 115, y: 208 }));
+
+		stage.insert(new Q.Gateway({ x: 60, y: 208 }));
 
 		stage.add("viewport").follow(player, { x: true, y: true });
-		//stage.viewport.scale = 2;
+		stage.viewport.scale = 2;
 
 		currLevel += 1;
 	});
