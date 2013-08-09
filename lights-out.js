@@ -441,108 +441,42 @@ $(document).ready(function () {
                 y: Q.height - 50
             }));
         }
-
-        stage.insert(new Q.Orb({
-            x: 720,
-            y: 560
-        }));
-        stage.insert(new Q.Orb({
-            x: 752,
-            y: 528
-        }));
-        stage.insert(new Q.Orb({
-            x: 784,
-            y: 496
-        }));
-        stage.insert(new Q.Orb({
-            x: 816,
-            y: 464
-        }));
-        stage.insert(new Q.Orb({
-            x: 848,
-            y: 432
-        }));
-        stage.insert(new Q.Orb({
-            x: 784,
-            y: 400
-        }));
-        stage.insert(new Q.Orb({
-            x: 752,
-            y: 368
-        }));
-        stage.insert(new Q.Orb({
-            x: 720,
-            y: 336
-        }));
-        stage.insert(new Q.Orb({
-            x: 688,
-            y: 304
-        }));
-        stage.insert(new Q.Orb({
-            x: 622,
-            y: 272
-        }));
-        stage.insert(new Q.Orb({
-            x: 560,
-            y: 304
-        }));
-        stage.insert(new Q.Orb({
-            x: 528,
-            y: 336
-        }));
-        stage.insert(new Q.Orb({
-            x: 400,
-            y: 336
-        }));
-        stage.insert(new Q.Orb({
-            x: 368,
-            y: 304
-        }));
-        stage.insert(new Q.Orb({
-            x: 272,
-            y: 272
-        }));
-        stage.insert(new Q.Orb({
-            x: 208,
-            y: 272
-        }));
-        stage.insert(new Q.Orb({
-            x: 240,
-            y: 240
-        }));
-        stage.insert(new Q.Orb({
-            x: 305,
-            y: 208
-        }));
-        stage.insert(new Q.Orb({
-            x: 361,
-            y: 176
-        }));
-        stage.insert(new Q.Orb({
-            x: 432,
-            y: 144
-        }));
-        stage.insert(new Q.Orb({
-            x: 464,
-            y: 112
-        }));
-        stage.insert(new Q.Orb({
-            x: 532,
-            y: 80
-        }));
-        stage.insert(new Q.Orb({
-            x: 606,
-            y: 80
-        }));
-        stage.insert(new Q.Orb({
-            x: 668,
-            y: 80
-        }));
-        stage.insert(new Q.Orb({
-            x: 752,
-            y: 112
-        }));
-
+        
+        var orbCoords = [
+            {x: 720, y: 560},
+            {x: 752, y: 528},
+            {x: 784, y: 496},
+            {x: 816, y: 464},
+            {x: 848, y: 432},
+            {x: 784, y: 400},
+            {x: 752, y: 368},
+            {x: 720, y: 336},
+            {x: 688, y: 304},
+            {x: 622, y: 272},
+            {x: 560, y: 304},
+            {x: 528, y: 336},
+            {x: 400, y: 336},
+            {x: 368, y: 304},
+            {x: 272, y: 272},
+            {x: 208, y: 272},
+            {x: 240, y: 240},
+            {x: 305, y: 208},
+            {x: 361, y: 176},
+            {x: 432, y: 144},
+            {x: 464, y: 112},
+            {x: 532, y: 80},
+            {x: 606, y: 80},
+            {x: 668, y: 80},
+            {x: 752, y: 112}
+        ];
+            
+        for (var i = 0; i < orbCoords.length; i++) {
+            stage.insert(new Q.Orb({
+               x: orbCoords[i].x, 
+               y: orbCoords[i].y, 
+            }));
+        }
+        
         stage.insert(new Q.Gateway({
             x: 848,
             y: 144
@@ -586,82 +520,34 @@ $(document).ready(function () {
             x: 688,
             y: 368
         }));
-
-        //stage.insert(new Q.Orb({ x: 128, y: 550 }));
-        stage.insert(new Q.Orb({
-            x: 48,
-            y: 464
-        }));
-        stage.insert(new Q.Orb({
-            x: 185,
-            y: 432
-        }));
-        //stage.insert(new Q.Orb({ x: 240, y: 350 }));
-        stage.insert(new Q.Orb({
-            x: 304,
-            y: 304
-        }));
-        stage.insert(new Q.Orb({
-            x: 336,
-            y: 272
-        }));
-        stage.insert(new Q.Orb({
-            x: 368,
-            y: 240
-        }));
-        stage.insert(new Q.Orb({
-            x: 434,
-            y: 208
-        }));
-        stage.insert(new Q.Orb({
-            x: 496,
-            y: 368
-        }));
-        stage.insert(new Q.Orb({
-            x: 557,
-            y: 368
-        }));
-        stage.insert(new Q.Orb({
-            x: 625,
-            y: 368
-        }));
-        //stage.insert(new Q.Orb({ x: 688, y: 260 }));
-        stage.insert(new Q.Orb({
-            x: 656,
-            y: 240
-        }));
-        stage.insert(new Q.Orb({
-            x: 592,
-            y: 208
-        }));
-        stage.insert(new Q.Orb({
-            x: 560,
-            y: 176
-        }));
-        stage.insert(new Q.Orb({
-            x: 528,
-            y: 144
-        }));
-        stage.insert(new Q.Orb({
-            x: 463,
-            y: 112
-        }));
-        stage.insert(new Q.Orb({
-            x: 365,
-            y: 144
-        }));
-        stage.insert(new Q.Orb({
-            x: 301,
-            y: 144
-        }));
-        stage.insert(new Q.Orb({
-            x: 237,
-            y: 144
-        }));
-        stage.insert(new Q.Orb({
-            x: 138,
-            y: 144
-        }));
+        
+        var orbCoords = [
+            {x: 48, y: 464},
+            {x: 185, y: 432},
+            {x: 304, y: 304},
+            {x: 336, y: 272},
+            {x: 368, y: 240},
+            {x: 434, y: 208},
+            {x: 496, y: 368},
+            {x: 557, y: 368},
+            {x: 625, y: 368},
+            {x: 656, y: 240},
+            {x: 592, y: 208},
+            {x: 560, y: 176},
+            {x: 528, y: 144},
+            {x: 463, y: 112},
+            {x: 365, y: 144},
+            {x: 301, y: 144},
+            {x: 237, y: 144},
+            {x: 138, y: 144}
+        ];
+            
+        for (var i = 0; i < orbCoords.length; i++) {
+            stage.insert(new Q.Orb({
+               x: orbCoords[i].x, 
+               y: orbCoords[i].y, 
+            }));
+        }
 
         stage.insert(new Q.Gateway({
             x: 64,
@@ -708,23 +594,20 @@ $(document).ready(function () {
             x: 848,
             y: 528
         }));
-
-        stage.insert(new Q.Orb({
-            x: 113,
-            y: 560
-        }));
-        stage.insert(new Q.Orb({
-            x: 433,
-            y: 560
-        }));
-        stage.insert(new Q.Orb({
-            x: 752,
-            y: 560
-        }));
-        stage.insert(new Q.Orb({
-            x: 809,
-            y: 528
-        }));
+        
+        var orbCoords = [
+            {x: 113, y: 560},
+            {x: 433, y: 560},
+            {x: 752, y: 560},
+            {x: 809, y: 528}
+        ];
+            
+        for (var i = 0; i < orbCoords.length; i++) {
+            stage.insert(new Q.Orb({
+               x: orbCoords[i].x, 
+               y: orbCoords[i].y, 
+            }));
+        }
 
         stage.insert(new Q.Gateway({
             x: 785,
@@ -768,39 +651,24 @@ $(document).ready(function () {
             y: 560,
             vx: 200
         }));
-
-        stage.insert(new Q.Orb({
-            x: 112,
-            y: 592
-        }));
-        stage.insert(new Q.Orb({
-            x: 144,
-            y: 560
-        }));
-        stage.insert(new Q.Orb({
-            x: 175,
-            y: 528
-        }));
-        stage.insert(new Q.Orb({
-            x: 592,
-            y: 528
-        }));
-        stage.insert(new Q.Orb({
-            x: 624,
-            y: 560
-        }));
-        stage.insert(new Q.Orb({
-            x: 656,
-            y: 592
-        }));
-        stage.insert(new Q.Orb({
-            x: 719,
-            y: 592
-        }));
-        stage.insert(new Q.Orb({
-            x: 764,
-            y: 592
-        }));
+        
+        var orbCoords = [
+            {x: 112, y: 592},
+            {x: 144, y: 560},
+            {x: 175, y: 528},
+            {x: 592, y: 528},
+            {x: 624, y: 560},
+            {x: 656, y: 592},
+            {x: 719, y: 592},
+            {x: 764, y: 592}
+        ];
+            
+        for (var i = 0; i < orbCoords.length; i++) {
+            stage.insert(new Q.Orb({
+               x: orbCoords[i].x, 
+               y: orbCoords[i].y, 
+            }));
+        }
 
         stage.insert(new Q.Gateway({
             x: 848,
@@ -849,51 +717,27 @@ $(document).ready(function () {
             x: 848,
             y: 304
         }));
-
-        stage.insert(new Q.Orb({
-            x: 113,
-            y: 336
-        }));
-        stage.insert(new Q.Orb({
-            x: 144,
-            y: 368
-        }));
-        stage.insert(new Q.Orb({
-            x: 624,
-            y: 400
-        }));
-        stage.insert(new Q.Orb({
-            x: 656,
-            y: 368
-        }));
-        stage.insert(new Q.Orb({
-            x: 688,
-            y: 336
-        }));
-        stage.insert(new Q.Orb({
-            x: 722,
-            y: 304
-        }));
-        stage.insert(new Q.Orb({
-            x: 779,
-            y: 304
-        }));
-        stage.insert(new Q.Orb({
-            x: 784,
-            y: 208
-        }));
-        stage.insert(new Q.Orb({
-            x: 739,
-            y: 208
-        }));
-        stage.insert(new Q.Orb({
-            x: 699,
-            y: 208
-        }));
-        stage.insert(new Q.Orb({
-            x: 115,
-            y: 208
-        }));
+        
+        var orbCoords = [
+            {x: 113, y: 336},
+            {x: 144, y: 368},
+            {x: 624, y: 400},
+            {x: 656, y: 368},
+            {x: 688, y: 336},
+            {x: 722, y: 304},
+            {x: 779, y: 304},
+            {x: 784, y: 208},
+            {x: 739, y: 208},
+            {x: 699, y: 208},
+            {x: 115, y: 208}
+        ];
+            
+        for (var i = 0; i < orbCoords.length; i++) {
+            stage.insert(new Q.Orb({
+               x: orbCoords[i].x, 
+               y: orbCoords[i].y, 
+            }));
+        }
 
         stage.insert(new Q.Gateway({
             x: 60,
